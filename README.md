@@ -2,7 +2,7 @@
 
 .ENV file has API which should be changed before you clone and run this code
 
-MongoCompas should be installed in local machine install it from here[(https://www.mongodb.com/docs/compass/current/install/).
+MongoDb Compass should be installed in local machine install it from here [(https://www.mongodb.com/docs/compass/current/install/).
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
