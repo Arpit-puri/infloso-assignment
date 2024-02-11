@@ -6,6 +6,13 @@ const sendEmail = require("../utils/email.js");
 const signup = async (req, res) => {
   try {
     const { name, email, password } = req.body;
+    if (!(name || email || password)) {
+      return res.status(400).json({
+        success: false,
+        msg: "All fields are required",
+      });
+    }
+
     //check for user already exist or not
     const userExist = await User.findOne({ email });
 
@@ -45,6 +52,11 @@ const signup = async (req, res) => {
 const login = async (req, res) => {
   try {
     const { credential, password } = req.body;
+    if (!password) {
+      return res.status(400).json({
+        msg: "Password required",
+      });
+    }
 
     //credentail can be an email or username
     var userMail = await User.findOne({ email: credential });
