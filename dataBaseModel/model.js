@@ -29,6 +29,13 @@ const UserSchema = new mongoose.Schema({
         required: true,
       },
     },
+    {
+      createdAt: {
+        type: Date,
+        default: Date.now,
+        expires: 30 * 3600,
+      },
+    },
   ],
 });
 
@@ -60,7 +67,10 @@ UserSchema.methods.matchPassword = async function (password) {
 
 UserSchema.methods.createResetPasswordToken = async function () {
   const resetToken = crypto.randomBytes(20).toString("hex");
-  this.passwordResetToken=crypto.createHash("sha512").update(resetToken).digest("hex");
+  this.passwordResetToken = crypto
+    .createHash("sha512")
+    .update(resetToken)
+    .digest("hex");
   this.passwordResetTokenExpire = Date.now() + 10 * 60 * 1000;
   return resetToken;
 };
