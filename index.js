@@ -39,7 +39,7 @@ app.use(cors());
 app.use("/", router);
 
 /**Starting Server */
-const port = process.env.PORT;
+const port = process.env.PORT || 8080;
 app.listen(port, () => {
   console.log(`Server connected to http://localhost:${port}`);
 });

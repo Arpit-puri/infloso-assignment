@@ -1,7 +1,7 @@
 const User = require("../dataBaseModel/model.js");
 const jwt = require("jsonwebtoken");
 const sendEmail = require("../utils/email.js");
-
+const { generateToken } = require("../tokens/token.js");
 //User signup
 const signup = async (req, res) => {
   try {
@@ -33,13 +33,12 @@ const signup = async (req, res) => {
     const data = await User.create({ name, email, password });
 
     //Generating token
-    const token = jwt.sign({ _id: data._id }, process.env.SECRET_KEY);
+    const {accessToken,refreshToken}=await generateToken(data);
 
-    //returning response with token and staus of true or false
     return res.status(201).json({
       status: true,
       msg: "Account created successfully",
-      token,
+      token:accessToken,
     });
   } catch (error) {
     return res

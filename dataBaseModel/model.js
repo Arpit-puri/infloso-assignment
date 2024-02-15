@@ -39,6 +39,9 @@ const UserSchema = new mongoose.Schema({
   ],
 });
 
+// Add unique index for email field to enforce uniqueness
+UserSchema.index({ email: 1 }, { unique: true });
+
 //creating intance methods
 
 UserSchema.methods.generateToken = async function () {
