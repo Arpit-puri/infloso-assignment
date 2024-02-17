@@ -1,9 +1,9 @@
 const jwt = require("jsonwebtoken");
-const User=require("../dataBaseModel/model.js")
+const User = require("../dataBaseModel/model.js");
+const { verifyRefreshToken } = require("../utils/verifyRefreshToken.js");
 
 module.exports.generateToken = async (user) => {
   try {
-
     const payload = { _id: user._id };
     const accessToken = jwt.sign(payload, process.env.SECRET_KEY, {
       expiresIn: "30min",
@@ -11,7 +11,7 @@ module.exports.generateToken = async (user) => {
     const refreshToken = jwt.sign(payload, process.env.REFRESH_TOKEN, {
       expiresIn: "30d",
     });
-  
+
     const userToken = await User.findByIdAndUpdate(
       user._id,
       {
@@ -24,8 +24,7 @@ module.exports.generateToken = async (user) => {
       },
       { new: true }
     );
-    // console.log(userToken.tokens);
-    return {accessToken,refreshToken};
+    return { accessToken, refreshToken };
   } catch (error) {
     // console.log(error);
     res.status(500).json({ status: false, msg: "Server error" });
